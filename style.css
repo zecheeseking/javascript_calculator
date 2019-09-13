@@ -1,4 +1,4 @@
-h1, p, input{
+h1, h2, p, input{
   font-family: Arial, sans-serif;
 }
 
@@ -30,6 +30,32 @@ body{
   border-radius: 15px;
   margin-top:25px;
   background-color: #ccc9c1;
+
+}
+
+#solarpanel{
+
+  height: 70%;
+  float: left;
+  width: 35%;
+  background: #32231e;
+  border: 3px inset #d5d1c9;
+  border-radius: 4px;
+  margin-top: 6px;
+  margin-left: 15px;
+  display: grid;
+  grid-template-columns: 24% auto 24% auto 24% auto 24%;
+}
+
+.solardeco{
+
+  background: #503d36;
+}
+
+#branding{
+  font-style: italic;
+  float:right;
+  padding: 0 2px 5px 15px;
 
 }
 
