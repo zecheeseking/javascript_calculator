@@ -17,6 +17,10 @@ body{
   width:80%;
   height: 15%;
   margin-top: 20px;
+  background: #a2af77;
+  border-radius: 17px;
+  border: 0px;
+  box-shadow: inset 2px 2px grey;
 }
 
 #buttonscontainer{
@@ -37,7 +41,11 @@ body{
 }
 
 .numpadbtn{
-  
+  margin: 7px;
+  font-weight: 700;
+  font-size: 36px;
+  border-width: 0px;
+  box-shadow: 2px 2px gray;
 }
 
 #operators{
