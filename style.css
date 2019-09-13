@@ -1,4 +1,4 @@
-h1, h2, p, input{
+h1, h2, p, span, input{
   font-family: Arial, sans-serif;
 }
 
@@ -17,7 +17,7 @@ body{
   display: flex;
   align-items: center;
   flex-direction: column;
-  background:#bbb9b3;
+  background: #bbb4b8;
   border-radius: 50px;
   width:550px;
   min-height:650px;
@@ -29,7 +29,7 @@ body{
   border:1px inset black;
   border-radius: 15px;
   margin-top:25px;
-  background-color: #ccc9c1;
+  background-color: #cec9cc;
 
 }
 
@@ -55,7 +55,7 @@ body{
 #branding{
   font-style: italic;
   float:right;
-  padding: 0 2px 5px 15px;
+  margin: 17px 15px;
 
 }
 
@@ -88,11 +88,11 @@ input[type="button"]{
   box-shadow: 2px 2px gray;
   border-radius: 5px;
   color: white;
-  background-color: #464444;
+  background-color: #b5b6e4;
 }
 
 input[type="button"].operator{
-  background-color: #676565;
+  background-color: #908a99;
 }
 
 #zerobutton{
@@ -104,5 +104,5 @@ input[type="button"].operator{
   grid-column-start: 4;
   grid-row-start: 4;
   grid-row-end: span 2;
-  background: #c57a50;
+  background: #4f43ae;
 }
