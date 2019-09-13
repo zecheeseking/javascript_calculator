@@ -1,22 +1,42 @@
+h1, p, input{
+  font-family: Arial, sans-serif;
+}
+
+h1{
+  font-weight:700;
+}
+
 body{
-  background: rgb(25, 180, 80);
+  background: rgb(247, 108, 101);
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #container{
   display: flex;
   align-items: center;
   flex-direction: column;
-  background:pink;
+  background:#bbb9b3;
+  border-radius: 50px;
   width:550px;
-  min-height:600px;
+  min-height:650px;
+}
+
+#top{
+  width: 80%;
+  height:50px;
+  border:1px inset black;
+  border-radius: 15px;
+  margin-top:25px;
+  background-color: #ccc9c1;
+
 }
 
 #screen{
   width:80%;
   height: 15%;
-  margin-top: 20px;
+  margin-top: 25px;
   background: #a2af77;
   border-radius: 17px;
   border: 0px;
@@ -28,30 +48,25 @@ body{
   width: 80%;
   height: 60%;
   margin-top: 35px;
+  margin-bottom: 25px;
   display: grid;
   grid-template-columns: repeat(4, 25%);
   grid-template-rows: repeat(5, 20%);
 }
 
-#numpad{
-
-  background: blue;
-  height: 100%;
-  width: 60%;
-}
-
-.numpadbtn{
+input[type="button"]{
   margin: 7px;
   font-weight: 700;
   font-size: 36px;
   border-width: 0px;
   box-shadow: 2px 2px gray;
+  border-radius: 5px;
+  color: white;
+  background-color: #464444;
 }
 
-#operators{
-  background: red;
-  height: 100%;
-  width: 40%;
+input[type="button"].operator{
+  background-color: #676565;
 }
 
 #zerobutton{
@@ -63,4 +78,5 @@ body{
   grid-column-start: 4;
   grid-row-start: 4;
   grid-row-end: span 2;
+  background: #c57a50;
 }
