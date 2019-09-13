@@ -20,11 +20,13 @@ body{
 }
 
 #buttonscontainer{
-  background:yellow;
+  padding: 10px;
   width: 80%;
   height: 60%;
   margin-top: 35px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows: repeat(5, 20%);
 }
 
 #numpad{
@@ -34,9 +36,23 @@ body{
   width: 60%;
 }
 
-#operators{
+.numpadbtn{
+  
+}
 
+#operators{
   background: red;
   height: 100%;
   width: 40%;
+}
+
+#zerobutton{
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+
+#equalsbutton{
+  grid-column-start: 4;
+  grid-row-start: 4;
+  grid-row-end: span 2;
 }
