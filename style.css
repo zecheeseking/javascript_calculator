@@ -19,6 +19,9 @@ body{
   flex-direction: column;
   background: #bbb4b8;
   border-radius: 50px;
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  
   width:550px;
   min-height:650px;
 }
