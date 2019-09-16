@@ -1,6 +1,6 @@
 operations = {
   '+' : {'precedence': 2, 'func': (a, b) => {return parseInt(a) + parseInt(b);}},
-  '-' : {'precedence': 1, 'func': (a, b) => {return parseInt(a) - parseInt(b);}},
+  '-' : {'precedence': 1, 'func': (a, b) => {return parseInt(b) - parseInt(a);}},
   '*' : {'precedence': 4, 'func': (a, b) => {return parseInt(a) * parseInt(b);}},
   '/' : {'precedence': 3, 'func': (a, b) => {return parseInt(a) / parseInt(b);}}
 }
@@ -91,12 +91,14 @@ function processRPN(rpn)
   while(rpn.length() > 0)
   {
     let val = rpn.pop();
-    if(parseInt(val))//if its a number
+    if(!isNaN(val))//if its a number
       numbers.push(val);//push to stack
     else
     {
       let a = numbers.pop();
       let b = numbers.pop();
+      if(val === '/' && parseInt(a) === 0 || parseInt(b) === 0)
+        return 'No division by zero! >:(';
       numbers.push(operations[val]['func'](a, b));
     }
   }
