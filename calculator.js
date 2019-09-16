@@ -1,3 +1,10 @@
+operations = {
+  '+' : {'precedence': 2, 'func': (a, b) => {return parseInt(a) + parseInt(b);}},
+  '-' : {'precedence': 1, 'func': (a, b) => {return parseInt(a) - parseInt(b);}},
+  '*' : {'precedence': 4, 'func': (a, b) => {return parseInt(a) * parseInt(b);}},
+  '/' : {'precedence': 3, 'func': (a, b) => {return parseInt(a) / parseInt(b);}}
+}
+
 var btns = document.querySelectorAll('input.display');
 
 for(let i = 0; i < btns.length; i++)
@@ -28,17 +35,7 @@ function clearDisplay()
 function operate()
 {
   let tokens = Tokenize(document.querySelector('#screendisplay').textContent);
-  operatorRefs = {
-    '+' : (a, b) => {return parseInt(a) + parseInt(b);},
-    '-' : (a, b) => {return parseInt(a) - parseInt(b);},
-    '*' : (a, b) => {return parseInt(a) * parseInt(b);},
-    '/' : (a, b) => {return parseInt(a) / parseInt(b);}
-  }
-
-  let numbers = new Queue();
-  let operators = new Stack();
-  //Shunting algorithm to sort tokens into Real Polish Notation!
-  
+  document.querySelector('#screendisplay').textContent = processRPN(parseToRPN(tokens));
 }
 
 function Tokenize(equation)
@@ -50,38 +47,61 @@ function Tokenize(equation)
     if(equation[0].match(/\d/))
     {
       let token = equation.match(/\d+/)[0];
-      tokens.push(token);
+      tokens.push({'type': 'number', 'value': token});
       equation = equation.substr(token.length);
     }
     else if(equation[0].match(/\W/))
     {
       let op = equation.match(/\W+/)[0];
+      tokens.push({'type': 'operator', 'value': op});
       equation = equation.substr(op.length);
-      tokens.push(op);
     }
   }
 
   return tokens;
 }
 
-function add(a, b)
+function parseToRPN(tokens)
 {
-  return a + b;
+  let rpnQueue = new Queue();
+  let operators = new Stack();
+  //Shunting algorithm to sort tokens into reverse Polish Notation!
+  tokens.forEach(token =>
+    {
+      if(token['type'] === 'number')
+      {
+        rpnQueue.push(token['value']);
+      }
+      else if(token['type'] === 'operator')
+      {
+        while(!operators.isEmpty() && operations[token['value']]['precedence'] < operations[operators.peek()]['precedence'])
+          rpnQueue.push(operators.pop());
+        operators.push(token['value']);
+      }
+    });
+    while(!operators.isEmpty())
+      rpnQueue.push(operators.pop());
+    return rpnQueue;
 }
 
-function subtract(a, b)
+function processRPN(rpn)
 {
-  return a - b;
-}
+  let numbers = new Stack();
 
-function multiply(a, b)
-{
-  return a * b;
-}
+  while(rpn.length() > 0)
+  {
+    let val = rpn.pop();
+    if(parseInt(val))//if its a number
+      numbers.push(val);//push to stack
+    else
+    {
+      let a = numbers.pop();
+      let b = numbers.pop();
+      numbers.push(operations[val]['func'](a, b));
+    }
+  }
 
-function divide(a, b)
-{
-  return a / b;
+  return numbers.pop();
 }
 
 class Queue
@@ -103,6 +123,11 @@ class Queue
       return null;
     return this.queue.splice(0, 1)[0];
   }
+
+  length()
+  {
+    return this.queue.length;
+  }
 }
 
 class Stack
@@ -123,5 +148,15 @@ class Stack
     if(this.stack.length === 0)
       return null;
     return this.stack.splice(this.stack.length - 1)[0];
+  }
+
+  peek()
+  {
+    return this.stack[this.stack.length - 1];
+  }
+
+  isEmpty()
+  {
+    return this.stack.length === 0;
   }
 }
