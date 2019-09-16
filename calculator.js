@@ -22,6 +22,11 @@ window.addEventListener('keydown', e =>
   {
     let display = document.querySelector('#screendisplay');
     display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+    if(display.textContent.length === 0)
+    {
+      display.classList.add('overwrite');
+      display.textContent = '0';
+    }
   }
 });
 
