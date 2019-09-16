@@ -28,14 +28,17 @@ function clearDisplay()
 function operate()
 {
   let tokens = Tokenize(document.querySelector('#screendisplay').textContent);
-  console.log(tokens);
-
-  operators = {
+  operatorRefs = {
     '+' : (a, b) => {return parseInt(a) + parseInt(b);},
     '-' : (a, b) => {return parseInt(a) - parseInt(b);},
     '*' : (a, b) => {return parseInt(a) * parseInt(b);},
     '/' : (a, b) => {return parseInt(a) / parseInt(b);}
   }
+
+  let numbers = new Queue();
+  let operators = new Stack();
+  //Shunting algorithm to sort tokens into Real Polish Notation!
+  
 }
 
 function Tokenize(equation)
@@ -81,6 +84,27 @@ function divide(a, b)
   return a / b;
 }
 
+class Queue
+{
+  queue = [];
+  constructor()
+  {
+    this.queue = [];
+  }
+
+  push(variable)
+  {
+    this.queue.push(variable);
+  }
+
+  pop()
+  {
+    if(this.queue.length === 0)
+      return null;
+    return this.queue.splice(0, 1)[0];
+  }
+}
+
 class Stack
 {
   stack = [];
@@ -89,16 +113,15 @@ class Stack
     this.stack = [];
   }
 
-  Push(variable)
+  push(variable)
   {
     this.stack.push(variable);
   }
 
-  Pop()
+  pop()
   {
     if(this.stack.length === 0)
-      return 0;
-    let left = this.stack.splice(this.stack.length - 1);
-    return left[0];
+      return null;
+    return this.stack.splice(this.stack.length - 1)[0];
   }
 }
