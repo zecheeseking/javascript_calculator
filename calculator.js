@@ -6,35 +6,51 @@ operations = {
 }
 
 var btns = document.querySelectorAll('input.display');
-
 for(let i = 0; i < btns.length; i++)
-{
     btns[i].addEventListener('click', (e) => appendToDisplay(e.target.value));
-}
-
-var clearbtn = document.querySelector('input[value=\'C\']');
-clearbtn.addEventListener('click', () => clearDisplay());
-
-var equalsbtn = document.querySelector('input[value=\'=\']');
-equalsbtn.addEventListener('click', () => operate());
+document.querySelector('input[value=\'C\']').addEventListener('click', () => clearDisplay());
+document.querySelector('input[value=\'=\']').addEventListener('click', () => operate());
+window.addEventListener('keydown', e =>
+{
+  //try to find node with same value as keypress.
+  let node = document.querySelector(`input[data-hotkey=\'${e.key}\']`);
+  if(node)
+  {
+    node.click();
+  }
+  else if(e.key === 'Backspace')
+  {
+    let display = document.querySelector('#screendisplay');
+    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+  }
+});
 
 function appendToDisplay(str)
 {
-  var currText = document.querySelector('#screendisplay').textContent;
-  //check here for duplicate operations being added.
+  let display = document.querySelector('#screendisplay');
+  var currText = display.textContent;
+
   if(str.match(/\W/g) && currText.charAt(currText.length - 1).match(/\W/g)) return;
 
-  document.querySelector('#screendisplay').textContent = currText + str;
+  if(display.classList.contains('overwrite') && !str.match(/\W/g))
+    display.textContent = str;
+  else
+    display.textContent = currText + str;
+
+  display.classList.remove('overwrite');
 }
 
 function clearDisplay()
 {
-  document.querySelector('#screendisplay').textContent = '';
+  let display = document.querySelector('#screendisplay');
+  display.textContent = '0';
+  display.classList.add('overwrite');
 }
 
 function operate()
 {
   let tokens = Tokenize(document.querySelector('#screendisplay').textContent);
+  document.querySelector('#screendisplay').classList.add('overwrite');
   document.querySelector('#screendisplay').textContent = processRPN(parseToRPN(tokens));
 }
 
@@ -97,8 +113,10 @@ function processRPN(rpn)
     {
       let a = numbers.pop();
       let b = numbers.pop();
-      if(val === '/' && parseInt(a) === 0 || parseInt(b) === 0)
+      if(val === '/' && (parseInt(a) === 0 || parseInt(b) === 0))
+      {
         return 'No division by zero! >:(';
+      }
       numbers.push(operations[val]['func'](a, b));
     }
   }
