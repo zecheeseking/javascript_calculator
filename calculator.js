@@ -32,6 +32,11 @@ function operate()
 function Tokenize(equation)
 {
   let index = 0;
+  let numbers = new Stack();
+  numbers.Push(5);
+  numbers.Push(6);
+  numbers.Push(7);
+  numbers.Pop();
 
   while(equation.length)
   {
@@ -70,4 +75,24 @@ function multiply(a, b)
 function divide(a, b)
 {
   return a / b;
+}
+
+class Stack
+{
+  stack = [];
+  constructor()
+  {
+    this.stack = [];
+  }
+
+  Push(variable)
+  {
+    this.stack.push(variable);
+  }
+
+  Pop()
+  {
+    let left = this.stack.splice(this.stack.length - 1);
+    return left[0];
+  }
 }
