@@ -7,8 +7,8 @@ operations = {
 
 var btns = document.querySelectorAll('input.display');
 for(let i = 0; i < btns.length; i++)
-    btns[i].addEventListener('click', (e) => appendToDisplay(e.target.value));
-document.querySelector('input[value=\'C\']').addEventListener('click', () => clearDisplay());
+    btns[i].addEventListener('click', (e) => {appendToDisplay(e.target.value); e.preventDefault();});
+document.querySelector('input[value=\'C\']').addEventListener('mousedown', () => {clearDisplay(); e.preventDefault();});
 document.querySelector('input[value=\'=\']').addEventListener('click', () => operate());
 window.addEventListener('keydown', e =>
 {
