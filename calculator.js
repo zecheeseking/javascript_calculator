@@ -1,4 +1,5 @@
 var btns = document.querySelectorAll('input.display');
+
 for(let i = 0; i < btns.length; i++)
 {
     btns[i].addEventListener('click', (e) => appendToDisplay(e.target.value));
@@ -26,35 +27,38 @@ function clearDisplay()
 
 function operate()
 {
-  Tokenize(document.querySelector('#screendisplay').textContent);
+  let tokens = Tokenize(document.querySelector('#screendisplay').textContent);
+  console.log(tokens);
+
+  operators = {
+    '+' : (a, b) => {return parseInt(a) + parseInt(b);},
+    '-' : (a, b) => {return parseInt(a) - parseInt(b);},
+    '*' : (a, b) => {return parseInt(a) * parseInt(b);},
+    '/' : (a, b) => {return parseInt(a) / parseInt(b);}
+  }
 }
 
 function Tokenize(equation)
 {
-  let index = 0;
-  let numbers = new Stack();
-  numbers.Push(5);
-  numbers.Push(6);
-  numbers.Push(7);
-  numbers.Pop();
+  let tokens = [];
 
   while(equation.length)
   {
-    if(equation[index].match(/\d/))
+    if(equation[0].match(/\d/))
     {
-      let token = equation.match(/\d+/);
-      console.log(token);
-      equation = equation.substr(token[0].length);
-      console.log(equation);
+      let token = equation.match(/\d+/)[0];
+      tokens.push(token);
+      equation = equation.substr(token.length);
     }
-    else if(equation[index].match(/\W/))
+    else if(equation[0].match(/\W/))
     {
-      let token2 = equation.match(/\W+/);
-      console.log(token2);
-      equation = equation.substr(token2[0].length);
-      console.log(equation);
+      let op = equation.match(/\W+/)[0];
+      equation = equation.substr(op.length);
+      tokens.push(op);
     }
   }
+
+  return tokens;
 }
 
 function add(a, b)
@@ -92,6 +96,8 @@ class Stack
 
   Pop()
   {
+    if(this.stack.length === 0)
+      return 0;
     let left = this.stack.splice(this.stack.length - 1);
     return left[0];
   }
