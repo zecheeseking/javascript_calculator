@@ -1,3 +1,9 @@
+
+@font-face {
+    font-family: 'pocketcalculator'; /*a name to be used later*/
+    src: url('POCKC___.TTF'); /*URL to font*/
+}
+
 h1, h2, p, span, input{
   font-family: Arial, sans-serif;
 }
@@ -21,7 +27,7 @@ body{
   border-radius: 50px;
   border-top-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  
+
   width:550px;
   min-height:650px;
 }
@@ -70,6 +76,17 @@ body{
   border-radius: 17px;
   border: 0px;
   box-shadow: inset 2px 2px grey;
+  display: flex;
+}
+
+#screendisplay{
+  font-family: 'pocketcalculator';
+  border: none;
+  text-align: right;
+  width: 90%;
+  margin: 20px 15px 10px 15px;
+  background: #fff0;
+  font-size: 44px;
 }
 
 #buttonscontainer{
