@@ -1,8 +1,8 @@
 operations = {
-  '+' : {'precedence': 2, 'func': (a, b) => {return parseInt(a) + parseInt(b);}},
-  '-' : {'precedence': 1, 'func': (a, b) => {return parseInt(b) - parseInt(a);}},
-  '*' : {'precedence': 4, 'func': (a, b) => {return parseInt(a) * parseInt(b);}},
-  '/' : {'precedence': 3, 'func': (a, b) => {return parseInt(a) / parseInt(b);}}
+  '+' : {'precedence': 2, 'func': (a, b) => {return a + b;}},
+  '-' : {'precedence': 1, 'func': (a, b) => {return b - a;}},
+  '*' : {'precedence': 4, 'func': (a, b) => {return a * b;}},
+  '/' : {'precedence': 3, 'func': (a, b) => {return a / b;}}
 }
 
 var btns = document.querySelectorAll('input.display');
@@ -12,7 +12,6 @@ document.querySelector('input[value=\'C\']').addEventListener('mousedown', () =>
 document.querySelector('input[value=\'=\']').addEventListener('click', () => operate());
 window.addEventListener('keydown', e =>
 {
-  //try to find node with same value as keypress.
   let node = document.querySelector(`input[data-hotkey=\'${e.key}\']`);
   if(node)
   {
@@ -20,13 +19,11 @@ window.addEventListener('keydown', e =>
   }
   else if(e.key === 'Backspace')
   {
-    let display = document.querySelector('#screendisplay');
-    display.textContent = display.textContent.substring(0, display.textContent.length - 1);
-    if(display.textContent.length === 0)
-    {
-      display.classList.add('overwrite');
-      display.textContent = '0';
-    }
+    deleteLastCharacter();
+  }
+  else if(e.key === 'Escape')
+  {
+    clearDisplay();
   }
 });
 
@@ -43,6 +40,17 @@ function appendToDisplay(str)
     display.textContent = currText + str;
 
   display.classList.remove('overwrite');
+}
+
+function deleteLastCharacter()
+{
+  let display = document.querySelector('#screendisplay');
+  display.textContent = display.textContent.substring(0, display.textContent.length - 1);
+  if(display.textContent.length === 0)
+  {
+    display.classList.add('overwrite');
+    display.textContent = '0';
+  }
 }
 
 function clearDisplay()
@@ -67,7 +75,7 @@ function Tokenize(equation)
   {
     if(equation[0].match(/\d/))
     {
-      let token = equation.match(/\d+/)[0];
+      let token = equation.match(/\d+\.?[0-9]*/)[0];
       tokens.push({'type': 'number', 'value': token});
       equation = equation.substr(token.length);
     }
@@ -116,9 +124,9 @@ function processRPN(rpn)
       numbers.push(val);//push to stack
     else
     {
-      let a = numbers.pop();
-      let b = numbers.pop();
-      if(val === '/' && (parseInt(a) === 0 || parseInt(b) === 0))
+      let a = numbers.peek().match(/\./) ? parseFloat(numbers.pop()) : parseInt(numbers.pop());
+      let b = numbers.peek().match(/\./) ? parseFloat(numbers.pop()) : parseInt(numbers.pop());
+      if(val === '/' && (a === 0 || b === 0))
       {
         return 'No division by zero! >:(';
       }
@@ -126,7 +134,7 @@ function processRPN(rpn)
     }
   }
 
-  return numbers.pop();
+  return Math.round(numbers.pop() * 10) / 10;
 }
 
 class Queue
