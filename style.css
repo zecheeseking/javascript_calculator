@@ -118,16 +118,6 @@ input[type="button"].operator{
   background-color: #908a99;
 }
 
-input[type="button"]:hover{
-  margin-top: 8.5px;
-  margin-bottom: 6px;
-
-  /*Shadow*/
-  -webkit-box-shadow: 0px 3.5px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 3.5px 0px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 3.5px 0px rgba(0, 0, 0, 0.6);
-}
-
 input[type="button"]:active{}
 
 input[type="button"].clicked{

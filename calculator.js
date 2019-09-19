@@ -16,11 +16,23 @@ for(let i = 0; i < btns.length; i++)
   btns[i].addEventListener('transitionend', removeTransition);
 
 }
-document.querySelector('input[value=\'C\']').addEventListener('mousedown', (e) => {
+let clearnBtn = document.querySelector('input[value=\'C\']');
+clearnBtn.addEventListener('mousedown', (e) =>
+{
   clearDisplay();
+  e.target.classList.add('clicked');
   e.preventDefault();
 });
-document.querySelector('input[value=\'=\']').addEventListener('click', () => operate());
+clearnBtn.addEventListener('transitionend', removeTransition);
+
+let equalsBtn = document.querySelector('input[value=\'=\']');
+equalsBtn.addEventListener('click', (e) =>
+{
+  e.target.classList.add('clicked');
+  operate();
+});
+equalsBtn.addEventListener('transitionend', removeTransition);
+
 window.addEventListener('keydown', e =>
 {
   let node = document.querySelector(`input[data-hotkey=\'${e.key}\']`);
