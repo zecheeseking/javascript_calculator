@@ -7,8 +7,19 @@ operations = {
 
 var btns = document.querySelectorAll('input.display');
 for(let i = 0; i < btns.length; i++)
-    btns[i].addEventListener('click', (e) => {appendToDisplay(e.target.value); e.preventDefault();});
-document.querySelector('input[value=\'C\']').addEventListener('mousedown', () => {clearDisplay(); e.preventDefault();});
+{
+  btns[i].addEventListener('click', (e) => {
+    appendToDisplay(e.target.value);
+    e.target.classList.add('clicked');
+    e.preventDefault();
+  });
+  btns[i].addEventListener('transitionend', removeTransition);
+
+}
+document.querySelector('input[value=\'C\']').addEventListener('mousedown', (e) => {
+  clearDisplay();
+  e.preventDefault();
+});
 document.querySelector('input[value=\'=\']').addEventListener('click', () => operate());
 window.addEventListener('keydown', e =>
 {
@@ -76,6 +87,12 @@ function operate()
   let tokens = Tokenize(document.querySelector('#screendisplay').textContent);
   document.querySelector('#screendisplay').classList.add('overwrite');
   document.querySelector('#screendisplay').textContent = processRPN(parseToRPN(tokens));
+}
+
+function removeTransition(e)
+{
+  if(e.propertyName !== 'margin-top') return;
+    this.classList.remove('clicked');
 }
 
 function Tokenize(equation)
