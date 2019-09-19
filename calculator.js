@@ -36,10 +36,21 @@ function appendToDisplay(str)
 
   if(display.classList.contains('overwrite') && !str.match(/\W/g))
     display.textContent = str;
+  else if(str === '.')
+    display.textContent = handleFloatingPoint(currText);
   else
     display.textContent = currText + str;
 
   display.classList.remove('overwrite');
+}
+
+function handleFloatingPoint(displayText)
+{
+  if(!displayText.charAt(displayText.length - 1).match(/\d/)) return; //not a number at the end, return.
+
+  let endNumber = displayText.match(/\d+\.?[0-9]*/g);
+  let numb = parseFloat(endNumber[endNumber.length - 1]);
+  return (numb - Math.floor(numb)) !== 0 ? displayText : (displayText + '.');
 }
 
 function deleteLastCharacter()
