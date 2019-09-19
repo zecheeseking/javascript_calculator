@@ -16,7 +16,7 @@ for(let i = 0; i < btns.length; i++)
   btns[i].addEventListener('transitionend', removeTransition);
 }
 
-let clearAllBtn = document.querySelector('input[value=\'MC\']');
+let clearAllBtn = document.querySelector('input[value=\'C\']');
 clearAllBtn.addEventListener('mousedown', (e) =>
 {
   clearDisplay();
@@ -25,7 +25,7 @@ clearAllBtn.addEventListener('mousedown', (e) =>
 });
 clearAllBtn.addEventListener('transitionend', removeTransition);
 
-let clearBtn = document.querySelector('input[value=\'C\']');
+let clearBtn = document.querySelector('input[value=\'Del\']');
 clearBtn.addEventListener('mousedown', (e) =>
 {
   deleteLastCharacter();
