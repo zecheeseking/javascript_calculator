@@ -14,16 +14,25 @@ for(let i = 0; i < btns.length; i++)
     e.preventDefault();
   });
   btns[i].addEventListener('transitionend', removeTransition);
-
 }
-let clearnBtn = document.querySelector('input[value=\'C\']');
-clearnBtn.addEventListener('mousedown', (e) =>
+
+let clearAllBtn = document.querySelector('input[value=\'MC\']');
+clearAllBtn.addEventListener('mousedown', (e) =>
 {
   clearDisplay();
   e.target.classList.add('clicked');
   e.preventDefault();
 });
-clearnBtn.addEventListener('transitionend', removeTransition);
+clearAllBtn.addEventListener('transitionend', removeTransition);
+
+let clearBtn = document.querySelector('input[value=\'C\']');
+clearBtn.addEventListener('mousedown', (e) =>
+{
+  deleteLastCharacter();
+  e.target.classList.add('clicked');
+  e.preventDefault();
+});
+clearBtn.addEventListener('transitionend', removeTransition);
 
 let equalsBtn = document.querySelector('input[value=\'=\']');
 equalsBtn.addEventListener('click', (e) =>
@@ -39,14 +48,6 @@ window.addEventListener('keydown', e =>
   if(node)
   {
     node.click();
-  }
-  else if(e.key === 'Backspace')
-  {
-    deleteLastCharacter();
-  }
-  else if(e.key === 'Escape')
-  {
-    clearDisplay();
   }
 });
 
